@@ -40,6 +40,9 @@ const newPallete = {
   blue: "#71B0FD",
   black: "#002859",
   grey: "#E5E9F2",
+  grey2: "#EFF2F7",
+  blue2: "#035AC5",
+  white: "#ffffff",
   disabled: "#E6E3E0",
 } as const
 

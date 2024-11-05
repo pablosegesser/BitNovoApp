@@ -1,11 +1,10 @@
-import React, { forwardRef, useCallback, useImperativeHandle, useRef, useState } from "react"
+import { forwardRef, useCallback, useImperativeHandle, useRef, useState } from "react"
 import {
   NativeSyntheticEvent,
   TextInput as RNTextInput,
   TextInputFocusEventData,
   TextInputProps as RNTextInputProps,
   TouchableWithoutFeedback,
-  ViewStyle,
   Text,
   TextStyle,
   StyleProp,
@@ -88,7 +87,7 @@ export const TextInput = forwardRef<Partial<TextInputType>, TextInputProps>(
           <RNTextInput
             ref={inputRef}
             editable={!disabled}
-            placeholderTextColor={colors.newpalette.disabled}
+            placeholderTextColor={colors.newPallete.disabled}
             style={[
               //  error && { color: colors.error },
               disabled && { color: colors.text },
@@ -106,9 +105,3 @@ export const TextInput = forwardRef<Partial<TextInputType>, TextInputProps>(
     )
   },
 )
-
-const $focusStyle: ViewStyle = {
-  borderWidth: 1,
-  borderColor: "red",
-  backgroundColor: "grey",
-}

@@ -71,29 +71,34 @@ const AppStack = () => {
         name="CreatePayment"
         initialParams={{ currency: "USD" }}
         component={Screens.CreatePaymentScreen}
-        options={{
+        options={({ route: { params } }) => ({
           headerShown: true,
           title: "Crear Pago",
           headerRight: () => (
-            <TouchableOpacity onPress={() => navigate("SelectCurrency")}>
-              <SelectCurrency currency="USD" />
+            <TouchableOpacity
+              onPress={() => navigate("SelectCurrency", { currency: params.currency })}
+            >
+              <SelectCurrency currency={params.currency} />
             </TouchableOpacity>
           ),
-        }}
+        })}
       />
       <Stack.Screen
         name="SelectCurrency"
         initialParams={{ currency: "USD" }}
         component={Screens.SelectCurrencyScreen}
-        options={{
+        options={({ route: { params } }) => ({
           headerShown: true,
-          title: "Selecciona divisa",
+          title: "Selecciona una divisa",
+          headerShadowVisible: false,
           headerLeft: () => (
-            <TouchableOpacity onPress={() => navigate("CreatePayment")}>
+            <TouchableOpacity
+              onPress={() => navigate("CreatePayment", { currency: params.currency })}
+            >
               <BackButtonIcon />
             </TouchableOpacity>
           ),
-        }}
+        })}
       />
       <Stack.Screen name="Welcome" component={Screens.WelcomeScreen} />
       {/** 🔥 Your screens go here */}

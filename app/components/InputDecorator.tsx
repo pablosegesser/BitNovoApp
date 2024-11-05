@@ -1,4 +1,4 @@
-import React, { type FC } from "react"
+import { type FC } from "react"
 import {
   type StyleProp,
   StyleSheet,
@@ -80,7 +80,7 @@ const styles = StyleSheet.create<Styles>({
   },
   container: {
     alignItems: "stretch",
-    borderColor: colors.newpalette.border,
+    borderColor: colors.newPallete.black,
     borderRadius: spacing.md,
     borderWidth: 1,
     flexDirection: "row",
@@ -96,13 +96,13 @@ const styles = StyleSheet.create<Styles>({
     paddingVertical: 6,
   },
   disabled: {
-    backgroundColor: colors.newpalette.disabled,
+    backgroundColor: colors.newPallete.disabled,
   },
   error: {
     borderColor: colors.error,
   },
   focus: {
-    borderColor: colors.newpalette.primary,
+    borderColor: colors.newPallete.black,
   },
   leftContainer: {
     justifyContent: "center",

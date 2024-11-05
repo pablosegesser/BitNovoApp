@@ -1,5 +1,5 @@
 import { Text, ViewStyle } from "react-native"
-import React, { FC } from "react"
+import { FC } from "react"
 import { FiatCurrency } from "@/types/common"
 import { Row } from "./flex"
 import { IconNew } from "./IconNew"
@@ -22,6 +22,6 @@ export default SelectCurrency
 const $container: ViewStyle = {
   borderRadius: 30,
   backgroundColor: "#D3DCE64D",
-  paddingHorizontal: 5,
-  paddingVertical: 3,
+  paddingHorizontal: 10,
+  paddingVertical: 5,
 }

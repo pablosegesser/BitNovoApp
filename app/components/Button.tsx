@@ -130,13 +130,14 @@ interface Styles {
 
 const styles = StyleSheet.create<Styles>({
   container: {
-    backgroundColor: colors.newPallete.loghtBlue,
-    borderRadius: spacing.md,
+    backgroundColor: colors.newPallete.blue2,
+    borderRadius: 6,
+    height: 56,
     justifyContent: "center",
     overflow: "hidden",
   },
   containerDisabled: {
-    backgroundColor: colors.newPallete.disabled,
+    backgroundColor: colors.newPallete.loghtBlue,
     borderRadius: spacing.md,
   },
   contentContainer: {
@@ -164,21 +165,20 @@ const styles = StyleSheet.create<Styles>({
     borderColor: colors.background,
   },
   textDisabledContainer: {
-    backgroundColor: colors.background,
-    borderColor: colors.background,
+    backgroundColor: colors.newPallete.loghtBlue,
   },
   textDisabledTitle: {
-    color: colors.newPallete.disabled,
+    color: colors.newPallete.blue,
   },
   textTitle: {
     color: colors.newPallete.black,
   },
   title: {
-    color: colors.newPallete.blue,
+    color: colors.newPallete.white,
     fontFamily: typography.fonts.mulish.normal,
     textAlign: "center",
   },
   titleDisabled: {
-    color: colors.background,
+    color: colors.newPallete.blue,
   },
 })

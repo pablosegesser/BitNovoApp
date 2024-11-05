@@ -18,7 +18,6 @@ export const TextField = forwardRef<TextInputType, TextFieldProps>((props, ref) 
 ))
 
 const $style: ViewStyle = {
-  backgroundColor: colors.newPallete.grey,
-  borderWidth: 0,
-  borderRadius: 8,
+  borderColor: colors.newPallete.grey,
+  borderRadius: 6,
 }
