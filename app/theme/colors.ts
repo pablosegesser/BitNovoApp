@@ -35,7 +35,16 @@ const palette = {
   overlay50: "rgba(25, 16, 21, 0.5)",
 } as const
 
+const newPallete = {
+  loghtBlue: "#EAF3FF",
+  blue: "#71B0FD",
+  black: "#002859",
+  grey: "#E5E9F2",
+  disabled: "#E6E3E0",
+} as const
+
 export const colors = {
+  newPallete,
   /**
    * The palette is available to use, but prefer using the name.
    * This is only included for rare, one-off cases. Try to use

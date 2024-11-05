@@ -8,9 +8,13 @@ import { NavigationContainer } from "@react-navigation/native"
 import { createNativeStackNavigator, NativeStackScreenProps } from "@react-navigation/native-stack"
 import * as Screens from "@/screens"
 import Config from "../config"
-import { navigationRef, useBackButtonHandler } from "./navigationUtilities"
+import { navigate, navigationRef, useBackButtonHandler } from "./navigationUtilities"
 import { useAppTheme, useThemeProvider } from "@/utils/useAppTheme"
 import { ComponentProps } from "react"
+import { FiatCurrency } from "@/types/common"
+import SelectCurrency from "@/components/SelectCurrency"
+import { TouchableOpacity } from "react-native"
+import BackButtonIcon from "@/theme/SVG/BackButton"
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -27,6 +31,8 @@ import { ComponentProps } from "react"
  */
 export type AppStackParamList = {
   Welcome: undefined
+  CreatePayment: { currency: FiatCurrency }
+  SelectCurrency: { currency: FiatCurrency }
   // 🔥 Your screens go here
   // IGNITE_GENERATOR_ANCHOR_APP_STACK_PARAM_LIST
 }
@@ -52,6 +58,7 @@ const AppStack = () => {
 
   return (
     <Stack.Navigator
+      initialRouteName="CreatePayment"
       screenOptions={{
         headerShown: false,
         navigationBarColor: colors.background,
@@ -60,6 +67,34 @@ const AppStack = () => {
         },
       }}
     >
+      <Stack.Screen
+        name="CreatePayment"
+        initialParams={{ currency: "USD" }}
+        component={Screens.CreatePaymentScreen}
+        options={{
+          headerShown: true,
+          title: "Crear Pago",
+          headerRight: () => (
+            <TouchableOpacity onPress={() => navigate("SelectCurrency")}>
+              <SelectCurrency currency="USD" />
+            </TouchableOpacity>
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="SelectCurrency"
+        initialParams={{ currency: "USD" }}
+        component={Screens.SelectCurrencyScreen}
+        options={{
+          headerShown: true,
+          title: "Selecciona divisa",
+          headerLeft: () => (
+            <TouchableOpacity onPress={() => navigate("CreatePayment")}>
+              <BackButtonIcon />
+            </TouchableOpacity>
+          ),
+        }}
+      />
       <Stack.Screen name="Welcome" component={Screens.WelcomeScreen} />
       {/** 🔥 Your screens go here */}
       {/* IGNITE_GENERATOR_ANCHOR_APP_STACK_SCREENS */}

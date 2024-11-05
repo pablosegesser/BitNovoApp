@@ -6,13 +6,14 @@ import { AppStackScreenProps } from "../navigators"
 import type { ThemedStyle } from "@/theme"
 import { useSafeAreaInsetsStyle } from "../utils/useSafeAreaInsetsStyle"
 import { useAppTheme } from "@/utils/useAppTheme"
+import { Button } from "@/components/Button"
 
 const welcomeLogo = require("../../assets/images/logo.png")
 const welcomeFace = require("../../assets/images/welcome-face.png")
 
 interface WelcomeScreenProps extends AppStackScreenProps<"Welcome"> {}
 
-export const WelcomeScreen: FC<WelcomeScreenProps> = () => {
+export const WelcomeScreen: FC<WelcomeScreenProps> = ({ navigation }) => {
   const { themed, theme } = useAppTheme()
 
   const $bottomContainerInsets = useSafeAreaInsetsStyle(["bottom"])
@@ -38,6 +39,10 @@ export const WelcomeScreen: FC<WelcomeScreenProps> = () => {
 
       <View style={themed([$bottomContainer, $bottomContainerInsets])}>
         <Text tx="welcomeScreen:postscript" size="md" />
+        <Button
+          variant="solid"
+          onPress={() => navigation.navigate("CreatePayment", { currency: "USD" })}
+        />
       </View>
     </Screen>
   )

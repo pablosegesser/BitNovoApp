@@ -10,12 +10,31 @@ import {
   SpaceGrotesk_700Bold as spaceGroteskBold,
 } from "@expo-google-fonts/space-grotesk"
 
+import {
+  Mulish_200ExtraLight as MulishExtraLight,
+  Mulish_300Light as MulishLight,
+  Mulish_400Regular as MulishRegular,
+  Mulish_500Medium as MulishMedium,
+  Mulish_600SemiBold as MulishSemiBold,
+  Mulish_700Bold as MulishBold,
+  Mulish_800ExtraBold as MulishExtraBold,
+  Mulish_900Black as MulishBlack,
+} from "@expo-google-fonts/mulish"
+
 export const customFontsToLoad = {
   spaceGroteskLight,
   spaceGroteskRegular,
   spaceGroteskMedium,
   spaceGroteskSemiBold,
   spaceGroteskBold,
+  MulishLight,
+  MulishExtraLight,
+  MulishMedium,
+  MulishRegular,
+  MulishBold,
+  MulishSemiBold,
+  MulishExtraBold,
+  MulishBlack,
 }
 
 const fonts = {
@@ -26,6 +45,14 @@ const fonts = {
     medium: "spaceGroteskMedium",
     semiBold: "spaceGroteskSemiBold",
     bold: "spaceGroteskBold",
+  },
+  mulish: {
+    // Cross-platform Google font.
+    light: "MulishLight",
+    normal: " MulishRegular",
+    medium: "MulishMedium",
+    semiBold: " MulishSemiBold",
+    bold: "MulishBold",
   },
   helveticaNeue: {
     // iOS only font.
@@ -59,7 +86,7 @@ export const typography = {
   /**
    * The primary font. Used in most places.
    */
-  primary: fonts.spaceGrotesk,
+  primary: fonts.mulish,
   /**
    * An alternate font used for perhaps titles and stuff.
    */

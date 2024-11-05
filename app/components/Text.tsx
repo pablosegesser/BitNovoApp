@@ -1,14 +1,13 @@
-import { TOptions } from "i18next"
+import React from "react"
 import { StyleProp, Text as RNText, TextProps as RNTextProps, TextStyle } from "react-native"
 import { isRTL, translate, TxKeyPath } from "../i18n"
-import type { ThemedStyle, ThemedStyleArray } from "@/theme"
+import { colors, typography } from "../theme"
+import { TOptions } from "i18next"
 import { useAppTheme } from "@/utils/useAppTheme"
-import { typography } from "@/theme/typography"
-import { ReactNode } from "react"
 
-type Sizes = keyof typeof $sizeStyles
-type Weights = keyof typeof typography.primary
-type Presets = "default" | "bold" | "heading" | "subheading" | "formLabel" | "formHelper"
+export type Sizes = keyof typeof $sizeStyles
+export type Weights = keyof typeof typography.primary
+export type Presets = keyof typeof $presets
 
 export interface TextProps extends RNTextProps {
   /**
@@ -43,7 +42,9 @@ export interface TextProps extends RNTextProps {
   /**
    * Children components.
    */
-  children?: ReactNode
+  children?: React.ReactNode
+
+  color?: string | undefined
 }
 
 /**
@@ -54,11 +55,22 @@ export interface TextProps extends RNTextProps {
  * @returns {JSX.Element} The rendered `Text` component.
  */
 export function Text(props: TextProps) {
-  const { weight, size, tx, txOptions, text, children, style: $styleOverride, ...rest } = props
-  const { themed } = useAppTheme()
+  const {
+    weight,
+    size,
+    tx,
+    txOptions,
+    text,
+    color,
+    children,
+    style: $styleOverride,
+    ...rest
+  } = props
 
   const i18nText = tx && translate(tx, txOptions)
   const content = i18nText || text || children
+
+  const { themed } = useAppTheme()
 
   const preset: Presets = props.preset ?? "default"
   const $styles: StyleProp<TextStyle> = [
@@ -70,44 +82,47 @@ export function Text(props: TextProps) {
   ]
 
   return (
-    <RNText {...rest} style={$styles}>
+    <RNText {...rest} style={[$styles, { color }, $styleOverride]}>
       {content}
     </RNText>
   )
 }
 
 const $sizeStyles = {
-  xxl: { fontSize: 36, lineHeight: 44 } satisfies TextStyle,
+  xxxxl: { fontSize: 36, lineHeight: 44 } satisfies TextStyle,
+  xxxl: { fontSize: 32, lineHeight: 40 } satisfies TextStyle,
+  xxl: { fontSize: 28, lineHeight: 36 } satisfies TextStyle,
   xl: { fontSize: 24, lineHeight: 34 } satisfies TextStyle,
   lg: { fontSize: 20, lineHeight: 32 } satisfies TextStyle,
   md: { fontSize: 18, lineHeight: 26 } satisfies TextStyle,
   sm: { fontSize: 16, lineHeight: 24 } satisfies TextStyle,
   xs: { fontSize: 14, lineHeight: 21 } satisfies TextStyle,
   xxs: { fontSize: 12, lineHeight: 18 } satisfies TextStyle,
+  xxxs: { fontSize: 10, lineHeight: 16 } satisfies TextStyle,
 }
 
 const $fontWeightStyles = Object.entries(typography.primary).reduce((acc, [weight, fontFamily]) => {
   return { ...acc, [weight]: { fontFamily } }
 }, {}) as Record<Weights, TextStyle>
 
-const $baseStyle: ThemedStyle<TextStyle> = (theme) => ({
-  ...$sizeStyles.sm,
-  ...$fontWeightStyles.normal,
-  color: theme.colors.text,
-})
+const $baseStyle: StyleProp<TextStyle> = [
+  $sizeStyles.xs,
+  $fontWeightStyles.normal,
+  { color: colors.text },
+]
 
-const $presets: Record<Presets, ThemedStyleArray<TextStyle>> = {
-  default: [$baseStyle],
-  bold: [$baseStyle, { ...$fontWeightStyles.bold }],
-  heading: [
-    $baseStyle,
-    {
-      ...$sizeStyles.xxl,
-      ...$fontWeightStyles.bold,
-    },
-  ],
-  subheading: [$baseStyle, { ...$sizeStyles.lg, ...$fontWeightStyles.medium }],
-  formLabel: [$baseStyle, { ...$fontWeightStyles.medium }],
-  formHelper: [$baseStyle, { ...$sizeStyles.sm, ...$fontWeightStyles.normal }],
+const $presets = {
+  default: $baseStyle,
+
+  bold: [$baseStyle, $fontWeightStyles.bold] as StyleProp<TextStyle>,
+
+  heading: [$baseStyle, $sizeStyles.xxl, $fontWeightStyles.bold] as StyleProp<TextStyle>,
+
+  subheading: [$baseStyle, $sizeStyles.lg, $fontWeightStyles.medium] as StyleProp<TextStyle>,
+
+  formLabel: [$baseStyle, $fontWeightStyles.medium] as StyleProp<TextStyle>,
+
+  formHelper: [$baseStyle, $sizeStyles.sm, $fontWeightStyles.normal] as StyleProp<TextStyle>,
 }
+
 const $rtlStyle: TextStyle = isRTL ? { writingDirection: "rtl" } : {}
