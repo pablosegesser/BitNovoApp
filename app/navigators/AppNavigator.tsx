@@ -33,6 +33,18 @@ export type AppStackParamList = {
   Welcome: undefined
   CreatePayment: { currency: FiatCurrency }
   SelectCurrency: { currency: FiatCurrency }
+  SharePayment: {
+    link: string
+    amount: number
+    currency: FiatCurrency
+    prefix?: string | undefined
+  }
+  SelectPrefix: {
+    link: string
+    amount: number
+    currency: FiatCurrency
+    prefix?: string | undefined
+  }
   // 🔥 Your screens go here
   // IGNITE_GENERATOR_ANCHOR_APP_STACK_PARAM_LIST
 }
@@ -100,6 +112,22 @@ const AppStack = () => {
           ),
         })}
       />
+      <Stack.Screen
+        name="SharePayment"
+        component={Screens.SharePaymentScreen}
+        options={{
+          headerShown: true,
+        }}
+      />
+
+      <Stack.Screen
+        name="SelectPrefix"
+        component={Screens.SelectPrefixScreen}
+        options={{
+          headerShown: true,
+        }}
+      />
+
       <Stack.Screen name="Welcome" component={Screens.WelcomeScreen} />
       {/** 🔥 Your screens go here */}
       {/* IGNITE_GENERATOR_ANCHOR_APP_STACK_SCREENS */}

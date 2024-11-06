@@ -9,6 +9,19 @@ import { FiatCurrency } from "@/types/common"
 
 interface CreatePaymentScreenProps extends AppStackScreenProps<"CreatePayment"> {}
 
+export const returnCurrencySymbol = (currency: FiatCurrency): string => {
+  switch (currency) {
+    case "EUR":
+      return "€"
+    case "GBP":
+      return "£"
+    case "USD":
+      return "$"
+    default:
+      return "$"
+  }
+}
+
 export const CreatePaymentScreen: React.FC<CreatePaymentScreenProps> = ({
   navigation,
   route: {
@@ -19,18 +32,7 @@ export const CreatePaymentScreen: React.FC<CreatePaymentScreenProps> = ({
 
   const [message, setMessage] = useState<string>("")
 
-  const returnCurrencySymbol = (currency: FiatCurrency): string => {
-    switch (currency) {
-      case "EUR":
-        return "€"
-      case "GBP":
-        return "£"
-      case "USD":
-        return "$"
-      default:
-        return "$"
-    }
-  }
+  const [focused, setFocused] = useState<boolean>(false)
 
   return (
     <BottomMenuScreenLayout
@@ -39,6 +41,12 @@ export const CreatePaymentScreen: React.FC<CreatePaymentScreenProps> = ({
       primaryButton={{
         title: "Continuar",
         disabled: !amount,
+        onPress: () =>
+          navigation.navigate("SharePayment", {
+            amount: amount ?? 0,
+            currency,
+            link: "http://google.com",
+          }),
       }}
     >
       <View style={$container}>
@@ -50,8 +58,8 @@ export const CreatePaymentScreen: React.FC<CreatePaymentScreenProps> = ({
           onChangeValue={setAmount}
           suffix={returnCurrencySymbol(currency)}
           minValue={0}
-          delimiter=","
-          separator="."
+          delimiter="."
+          separator=","
         />
 
         <TextField
@@ -61,7 +69,11 @@ export const CreatePaymentScreen: React.FC<CreatePaymentScreenProps> = ({
             onChangeText: setMessage,
             maxLength: 140,
             multiline: true,
+            style: focused ? $textFieldFocusStyle : $textField,
             placeholder: "Añade descripción del pago",
+            onFocus: () => setFocused(true),
+            onBlur: () => setFocused(false),
+            onEndEditing: () => setFocused(false),
           }}
           charCounter={{
             entered: message.length,
@@ -78,6 +90,17 @@ const $inputStyle: TextStyle = {
   color: colors.newPallete.blue,
   fontFamily: typography.fonts.mulish.bold,
   paddingBottom: 50,
+}
+
+const $textField: ViewStyle = {
+  borderColor: colors.newPallete.grey,
+  borderRadius: 6,
+}
+
+const $textFieldFocusStyle: ViewStyle = {
+  ...$textField,
+  borderColor: colors.newPallete.blue2,
+  borderWidth: 2,
 }
 
 const $container: ViewStyle = { paddingHorizontal: spacing.lg, paddingTop: 75 }

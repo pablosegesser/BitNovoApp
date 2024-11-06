@@ -24,4 +24,6 @@ const $container: ViewStyle = {
   backgroundColor: "#D3DCE64D",
   paddingHorizontal: 10,
   paddingVertical: 5,
+  justifyContent: "space-between",
+  width: 73,
 }

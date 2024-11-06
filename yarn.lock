@@ -3715,6 +3715,11 @@ cosmiconfig@^5.0.5, cosmiconfig@^5.1.0:
     js-yaml "^3.13.1"
     parse-json "^4.0.0"
 
+country-list-with-dial-code-and-flag@^5.0.6:
+  version "5.0.6"
+  resolved "https://registry.yarnpkg.com/country-list-with-dial-code-and-flag/-/country-list-with-dial-code-and-flag-5.0.6.tgz#40727c2181aada0cc46ef148c741ad2fb3dbb47b"
+  integrity sha512-krdow9tPMQDr9PcUpS35K9q4sGuxk9HL7wRh59Z7yrsgq6JeNi+KtPbtoP+2it9YiH5GlH4mn4xZx+Z8rLmw2A==
+
 create-jest@^29.7.0:
   version "29.7.0"
   resolved "https://registry.yarnpkg.com/create-jest/-/create-jest-29.7.0.tgz#a355c5b3cb1e1af02ba177fe7afd7feee49a5320"
@@ -4807,6 +4812,11 @@ expo-modules-core@1.12.26:
   integrity sha512-y8yDWjOi+rQRdO+HY+LnUlz8qzHerUaw/LUjKPU/mX8PRXP4UUPEEp5fjAwBU44xjNmYSHWZDwet4IBBE+yQUA==
   dependencies:
     invariant "^2.2.4"
+
+expo-sharing@~12.0.1:
+  version "12.0.1"
+  resolved "https://registry.yarnpkg.com/expo-sharing/-/expo-sharing-12.0.1.tgz#6c4d951beda47dac47112e679d60fc06c233b7aa"
+  integrity sha512-wBT+WeXwapj/9NWuLJO01vi9bdlchYu/Q/xD8slL/Ls4vVYku8CPqzkTtDFcjLrjtlJqyeHsdQXwKLvORmBIew==
 
 expo-splash-screen@~0.27.4:
   version "0.27.6"

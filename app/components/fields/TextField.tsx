@@ -1,4 +1,4 @@
-import React, { forwardRef } from "react"
+import { forwardRef } from "react"
 
 import { Field, type FieldProps } from "../Field"
 import { TextInput, type TextInputProps, type TextInputType } from "../TextInput"

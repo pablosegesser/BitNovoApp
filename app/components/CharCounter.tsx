@@ -1,8 +1,9 @@
 import React, { type FC, useMemo } from "react"
-import { StyleSheet, type TextStyle, View, type ViewProps } from "react-native"
+import { StyleSheet, type TextStyle, type ViewProps } from "react-native"
 
 import { Text } from "./Text"
 import { colors } from "app/theme"
+import { Row } from "./flex"
 
 type CharCounterOptions =
   | {
@@ -38,9 +39,10 @@ export const CharCounter: FC<CharCounterProps> = ({ entered, limit, ...props }) 
   const isExceeded = (entered ?? 0) > (limit ?? 0)
 
   return (
-    <View {...props}>
+    <Row {...props}>
       <Text style={isExceeded && styles.textError}>{text}</Text>
-    </View>
+      <Text> caracteres</Text>
+    </Row>
   )
 }
 
