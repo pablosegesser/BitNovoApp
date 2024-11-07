@@ -7,5 +7,5 @@
  */
 export default {
   API_URL: "https://payments.pre-bnvo.com/api/v1",
-  API_KEY: "3c45f17a-1d3f-4ac2-b8ac-a65b4060e5ab",
+  API_KEY: process.env.EXPO_PUBLIC_X_DEVICE_ID,
 }
