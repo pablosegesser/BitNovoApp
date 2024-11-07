@@ -6,7 +6,6 @@ import { colors, spacing, typography } from "@/theme"
 import PaymentIcon from "@/theme/SVG/PaymentIcon"
 import { FC, useCallback, useEffect, useState } from "react"
 import {
-  Alert,
   Linking,
   Platform,
   Pressable,
@@ -86,13 +85,7 @@ export const SharePaymentScreen: FC<SharePaymentScreenProps> = ({
   const socket = new WebSocket(`wss://payments.pre-bnvo.com/ws/merchant/${params.identifier}`)
 
   useEffect(() => {
-    socket.onopen = () => {
-      Alert.alert("open websocket connection")
-    }
-
     socket.onmessage = (a) => {
-      console.log(a.data)
-      Alert.alert("change in websocket connection")
       const resp = JSON.parse(a.data)
 
       if (resp.status === "CO") {
@@ -101,10 +94,6 @@ export const SharePaymentScreen: FC<SharePaymentScreenProps> = ({
           routes: [{ name: "Success" }],
         })
       }
-    }
-
-    socket.onclose = () => {
-      Alert.alert("close websocket connection")
     }
   }, [])
   return (
