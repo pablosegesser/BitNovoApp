@@ -1,4 +1,4 @@
-# Instructions to run fabiani app
+# Instructions to run the app
 
 ## First step
 
