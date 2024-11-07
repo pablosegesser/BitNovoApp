@@ -2,16 +2,20 @@
 
 ## First step
 
-Download or clone repository and move to develop branch
+Download or clone repository and checkout to develop branch
 
 ## Second step
 
-Install node modules with command yarn install
+Copy and rename .env.example to .env and add the correct X-Device-Id in the environment variable
 
 ## Third step
 
-Generate ios and android folders using command npx expo prebuild, if you make changes and already have these folders use instead npx expo prebuild --clean to remove old folder and re compile code again
+Install node modules with command yarn install
 
 ## Fourth step
+
+Generate ios and android folders using command npx expo prebuild, if you make changes and already have these folders use instead npx expo prebuild --clean to clear old folders and re compile code again
+
+## Fifth step
 
 Run the app with command yarn ios or yarn android
