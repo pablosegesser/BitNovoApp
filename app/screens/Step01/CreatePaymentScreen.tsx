@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 import { AppStackScreenProps } from "@/navigators"
 import { BottomMenuScreenLayout } from "@/layouts/BottomMenuScreenLayout"
-import { Alert, TextStyle, View, ViewStyle } from "react-native"
+import { TextStyle, View, ViewStyle } from "react-native"
 import CurrencyInput from "react-native-currency-input"
 import { useState } from "react"
 import { TextField } from "@/components/fields/TextField"
@@ -56,7 +56,6 @@ export const CreatePaymentScreen: React.FC<CreatePaymentScreenProps> = ({
         message: message !== "" ? message : undefined,
       })
       setLoading(false)
-      Alert.alert("succesfully create order ")
     }
     setLoading(false)
   }
@@ -110,7 +109,7 @@ export const CreatePaymentScreen: React.FC<CreatePaymentScreenProps> = ({
 
 const $inputStyle: TextStyle = {
   fontSize: 40,
-  color: colors.newPallete.blue,
+  color: colors.newPallete.blue2,
   fontFamily: typography.fonts.mulish.bold,
   paddingBottom: 50,
 }
