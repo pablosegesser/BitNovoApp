@@ -85,7 +85,7 @@ export const SharePaymentScreen: FC<SharePaymentScreenProps> = ({
     >
       <View style={{ paddingHorizontal: spacing.lg }}>
         <Column gap={"md"} style={$square}>
-          <Row>
+          <Row gap={"md"}>
             <PaymentIcon />
             <Column gap="xxs">
               <Text>Solicitud de pago</Text>

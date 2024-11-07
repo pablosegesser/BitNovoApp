@@ -30,6 +30,7 @@ import { customFontsToLoad } from "./theme"
 import Config from "./config"
 import { KeyboardProvider } from "react-native-keyboard-controller"
 import { loadDateFnsLocale } from "./utils/formatDate"
+import { StatusBar } from "expo-status-bar"
 
 export const NAVIGATION_PERSISTENCE_KEY = "NAVIGATION_STATE"
 
@@ -107,7 +108,8 @@ function App(props: AppProps) {
   return (
     <SafeAreaProvider initialMetrics={initialWindowMetrics}>
       <ErrorBoundary catchErrors={Config.catchErrors}>
-        <KeyboardProvider statusBarTranslucent>
+        <KeyboardProvider>
+          <StatusBar style={"dark"} backgroundColor="#fff" translucent />
           <AppNavigator
             linking={linking}
             initialState={initialNavigationState}
