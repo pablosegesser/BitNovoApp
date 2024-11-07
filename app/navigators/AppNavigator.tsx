@@ -127,15 +127,11 @@ const AppStack = () => {
       <Stack.Screen
         name="SharePayment"
         component={Screens.SharePaymentScreen}
-        options={({ navigation }) => ({
+        options={() => ({
           headerShown: true,
           headerTitle: "",
           headerShadowVisible: false,
-          headerLeft: () => (
-            <TouchableOpacity onPress={() => navigation.goBack()}>
-              <BackButtonIcon />
-            </TouchableOpacity>
-          ),
+          headerBackVisible: false,
         })}
       />
 
