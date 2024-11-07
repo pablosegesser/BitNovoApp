@@ -20,9 +20,11 @@ export const SelectPrefixScreen: FC<SelectPrefixScreenProps> = ({
   }
   const { control, watch, reset } = useForm<Search>()
 
-  const prefixDefault = CountryList.getAll().findIndex((c) => c.dial_code === params.prefix) || 0
+  const countrylist = useMemo(() => CountryList.getAll(), [])
 
-  const [prefixx, setPrefix] = useState<CountryInterface>(CountryList.getAll()[prefixDefault])
+  const prefixDefault = countrylist.findIndex((c) => c.dial_code === params?.prefix) || 0
+
+  const [prefixx, setPrefix] = useState<CountryInterface>(countrylist[prefixDefault])
 
   const setPrefixx = (a: CountryInterface) => {
     setPrefix(a)
@@ -37,8 +39,9 @@ export const SelectPrefixScreen: FC<SelectPrefixScreenProps> = ({
       return prefixFiltered
     }
 
-    return CountryList.getAll()
+    return countrylist
   }, [search])
+
   return (
     <Screen backgroundColor="#fff" style={$screenStyle} safeAreaEdges={["bottom"]}>
       <FormSearchField
@@ -52,6 +55,8 @@ export const SelectPrefixScreen: FC<SelectPrefixScreenProps> = ({
         }}
       />
       <FlatList
+        onScrollToIndexFailed={() => null}
+        initialScrollIndex={prefixDefault || 0}
         data={prefixSearched}
         keyExtractor={(item, i) => `${item.dialCode}_${i}`}
         renderItem={({ item }) => (
