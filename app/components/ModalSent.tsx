@@ -5,7 +5,7 @@ import { Column } from "./flex"
 import { Text } from "./Text"
 import { Button } from "./Button"
 import { Dismissable } from "@/contexts/ModalContext"
-import { Dimensions, ViewStyle } from "react-native"
+import { Dimensions, ViewStyle, TextStyle } from "react-native"
 import InfoCircleIcon from "@/theme/SVG/InfoIcon"
 import { colors } from "@/theme"
 
@@ -24,7 +24,7 @@ const ModalSent: FC<SentModalProps> = ({ message, error = false, dismiss }) => {
         <Text size="xl" weight="bold">
           {error ? "Error enviando solicitud" : "Solicitud enviada"}
         </Text>
-        <Text color={colors.newPallete.textGrey}>{message}</Text>
+        <Text style={$text}>{message}</Text>
         <Button style={{ width: width - 50 }} variant="solid" title="Entendido" onPress={dismiss} />
       </Column>
     </SafeAreaBottomSheet>
@@ -32,6 +32,11 @@ const ModalSent: FC<SentModalProps> = ({ message, error = false, dismiss }) => {
 }
 
 export default ModalSent
+
+const $text: TextStyle = {
+  color: colors.newPallete.textGrey,
+  textAlign: "center",
+}
 
 const $container: ViewStyle = {
   backgroundColor: "#fff",
