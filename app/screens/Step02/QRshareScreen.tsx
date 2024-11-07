@@ -8,7 +8,7 @@ import { FC, useEffect } from "react"
 import { Dimensions, TextStyle, View, ViewStyle } from "react-native"
 import QRCode from "react-native-qrcode-svg"
 import { returnCurrencySymbol } from "../Step01/CreatePaymentScreen"
-import { formatMoney } from "@/utils/formatMoney"
+import { formatNumber } from "@/utils/formatNumber"
 
 interface QRshareScreenProps extends AppStackScreenProps<"QRlink"> {}
 
@@ -28,12 +28,6 @@ export const QRshareScreen: FC<QRshareScreenProps> = ({ navigation, route: { par
         navigation.reset({
           index: 0,
           routes: [{ name: "Success" }],
-        })
-      }
-      if (resp.status === "CA" || resp.status === "ER") {
-        navigation.reset({
-          index: 0,
-          routes: [{ name: "Error" }],
         })
       }
     }
@@ -58,7 +52,7 @@ export const QRshareScreen: FC<QRshareScreenProps> = ({ navigation, route: { par
       </View>
       <View style={$containerAmount}>
         <Text style={$textAmount}>
-          {formatMoney(params.amount)}
+          {formatNumber(params.amount, 2)}
           {returnCurrencySymbol(params.currency)}
         </Text>
       </View>

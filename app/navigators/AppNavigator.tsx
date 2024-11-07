@@ -15,6 +15,7 @@ import { FiatCurrency } from "@/types/common"
 import SelectCurrency from "@/components/SelectCurrency"
 import { TouchableOpacity } from "react-native"
 import BackButtonIcon from "@/theme/SVG/BackButton"
+import LogoBitNovo from "@/theme/SVG/LogoBitNovo"
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -57,7 +58,7 @@ export type AppStackParamList = {
     prefix?: string | undefined
   }
   Success: undefined
-  Error: undefined
+
   // 🔥 Your screens go here
   // IGNITE_GENERATOR_ANCHOR_APP_STACK_PARAM_LIST
 }
@@ -162,8 +163,16 @@ const AppStack = () => {
           ),
         })}
       />
-      <Stack.Screen name="Success" component={Screens.SuccessScreen} />
-      <Stack.Screen name="Error" component={Screens.ErrorScreen} />
+      <Stack.Screen
+        name="Success"
+        component={Screens.SuccessScreen}
+        options={{
+          headerShown: true,
+          headerBackVisible: false,
+          headerTitleAlign: "center",
+          headerTitle: () => <LogoBitNovo />,
+        }}
+      />
 
       {/** 🔥 Your screens go here */}
       {/* IGNITE_GENERATOR_ANCHOR_APP_STACK_SCREENS */}

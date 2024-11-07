@@ -16,7 +16,6 @@ import {
   ViewStyle,
 } from "react-native"
 import { returnCurrencySymbol } from "../Step01/CreatePaymentScreen"
-import LinkIcon from "@/theme/SVG/LinkIcon"
 import QRicon from "@/theme/SVG/QrIcon"
 import SmsIcon from "@/theme/SVG/SmsIcon"
 import WhatsAppIcon from "@/theme/SVG/WhatsAppIcon"
@@ -24,10 +23,12 @@ import ExportIcon from "@/theme/SVG/ExportIcon"
 import { TextField } from "@/components/fields/TextField"
 import { IconNew } from "@/components/IconNew"
 import * as Sharing from "expo-sharing"
-import { formatMoney } from "@/utils/formatMoney"
 import NewWallet from "@/theme/SVG/NewWallet"
 import { useModal } from "@/hooks/useModal"
 import ModalSent from "@/components/ModalSent"
+import LinkIcon from "@/theme/SVG/LinkIcon"
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard"
+import { formatNumber } from "@/utils/formatNumber"
 
 interface SharePaymentScreenProps extends AppStackScreenProps<"SharePayment"> {}
 
@@ -79,8 +80,10 @@ export const SharePaymentScreen: FC<SharePaymentScreenProps> = ({
       handlePress("Tu solicitud de pago  ha sido compartida con éxito.")
     })
 
+  const copyToClipboard = useCopyToClipboard()
+
   const socket = new WebSocket(`wss://payments.pre-bnvo.com/ws/merchant/${params.identifier}`)
-  console.log(params.link)
+
   useEffect(() => {
     socket.onmessage = (a) => {
       console.log(a.data)
@@ -93,17 +96,11 @@ export const SharePaymentScreen: FC<SharePaymentScreenProps> = ({
           routes: [{ name: "Success" }],
         })
       }
-
-      if (resp.status === "CA" || resp.status === "ER") {
-        navigation.reset({
-          index: 0,
-          routes: [{ name: "Error" }],
-        })
-      }
     }
   }, [])
   return (
     <BottomMenuScreenLayout
+      avoidKeyboard
       style={$layoutStyle}
       buttons={[
         {
@@ -124,22 +121,27 @@ export const SharePaymentScreen: FC<SharePaymentScreenProps> = ({
           <Row gap={"md"}>
             <PaymentIcon />
             <Column gap="xxs">
-              <Text>Solicitud de pago</Text>
+              <Text color={colors.newPallete.textGrey}>Solicitud de pago</Text>
               <Text style={$number}>
-                {formatMoney(params.amount)}
+                {formatNumber(params.amount, 2)}
                 {returnCurrencySymbol(params.currency)}
               </Text>
             </Column>
           </Row>
-          <Text size="xs">Comparte el enlace de pago con el cliente</Text>
+          <Text size="xs" color={colors.newPallete.textGrey}>
+            Comparte el enlace de pago con el cliente
+          </Text>
         </Column>
 
         <Column gap={"md"}>
-          <Row gap={"xs"} style={$containerPreview}>
-            <Row gap={"md"} style={$subcontainerPreview}>
-              <LinkIcon />
-              <Text size="xxs">{params.link}</Text>
-            </Row>
+          <Row style={$containerPreview}>
+            <TouchableOpacity onPress={() => copyToClipboard(params.link)}>
+              <Row gap={"md"} style={$subcontainerPreview}>
+                <LinkIcon />
+                <Text size="xxs">{params.link}</Text>
+              </Row>
+            </TouchableOpacity>
+
             <TouchableOpacity style={$qricon} onPress={() => navigation.navigate("QRlink", params)}>
               <QRicon />
             </TouchableOpacity>
@@ -162,10 +164,10 @@ export const SharePaymentScreen: FC<SharePaymentScreenProps> = ({
                 onEndEditing: () => setActiveButton(false),
                 left: (
                   <Pressable onPress={() => navigation.navigate("SelectPrefix", params)}>
-                    <Row>
+                    <Row gap={"xxs"}>
                       <WhatsAppIcon />
-                      <Text>{params.prefix}</Text>
-                      <IconNew size={20} name="chevron-down" />
+                      <Text size="xxs">{params.prefix}</Text>
+                      <IconNew size={18} name="chevron-down" />
                     </Row>
                   </Pressable>
                 ),
@@ -184,7 +186,7 @@ export const SharePaymentScreen: FC<SharePaymentScreenProps> = ({
                     )}
                   </>
                 ),
-                style: activeButton ? $fieldActive : $field,
+                style: activeButton ? { ...$fieldActive, height: 50 } : { ...$field, height: 50 },
               }}
             />
           ) : (
@@ -215,7 +217,9 @@ export const SharePaymentScreen: FC<SharePaymentScreenProps> = ({
     </BottomMenuScreenLayout>
   )
 }
-const $containerPreview: ViewStyle = { justifyContent: "space-between" }
+const $containerPreview: ViewStyle = {
+  justifyContent: "space-between",
+}
 
 const $layoutStyle: ViewStyle = { backgroundColor: "#fff" }
 const $square: ViewStyle = {
@@ -245,7 +249,7 @@ const $field: ViewStyle = {
   borderColor: colors.newPallete.grey,
   padding: 15,
 }
-const $subcontainerPreview: ViewStyle = { ...$field, width: "80%" }
+const $subcontainerPreview: ViewStyle = { ...$field, width: "100%" }
 
 const $fieldActive: ViewStyle = {
   ...$field,

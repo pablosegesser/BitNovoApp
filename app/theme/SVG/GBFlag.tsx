@@ -1,6 +1,8 @@
-import Svg, { SvgProps, G, Path, Defs, ClipPath, Rect } from "react-native-svg"
-const GBFLag = (props: SvgProps) => (
-  <Svg width={32} height={32} viewBox="0 0 32 32" fill="none" {...props}>
+import { SvgIconProps } from "@/types/common"
+import { FC } from "react"
+import Svg, { G, Path, Defs, ClipPath, Rect } from "react-native-svg"
+const GBFLag: FC<SvgIconProps> = ({ size = 32 }) => (
+  <Svg width={size} height={size} viewBox="0 0 32 32" fill="none">
     <G clipPath="url(#clip0_2476_5563)">
       <Path
         d="M16 31.4375C24.8366 31.4375 32 24.4912 32 15.9224C32 7.3536 24.8366 0.407227 16 0.407227C7.16344 0.407227 0 7.3536 0 15.9224C0 24.4912 7.16344 31.4375 16 31.4375Z"

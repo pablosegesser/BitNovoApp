@@ -25,21 +25,21 @@ export const SelectCurrencyScreen: FC<SelectCurrencyScreenProps> = ({
   type Search = {
     search: string
   }
-  const { control, watch } = useForm<Search>()
+  const { control, watch, reset } = useForm<Search>()
 
   const currencies: Currencies[] = [
     {
-      image: <EuroFlag />,
+      image: <EuroFlag size={40} />,
       text: "Euro",
       symbol: "EUR",
     },
     {
-      image: <DolarFlag />,
-      text: "Dolar Estadounidense",
+      image: <DolarFlag size={40} />,
+      text: "Dólar Estadounidense",
       symbol: "USD",
     },
     {
-      image: <GBFLag />,
+      image: <GBFLag size={40} />,
       text: "Libra Esterlina",
       symbol: "GBP",
     },
@@ -72,6 +72,7 @@ export const SelectCurrencyScreen: FC<SelectCurrencyScreenProps> = ({
         control={control}
         name="search"
         field={{
+          onClear: () => reset(),
           input: {
             placeholder: "Buscar",
           },

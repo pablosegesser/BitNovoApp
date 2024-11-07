@@ -18,7 +18,7 @@ export const SelectPrefixScreen: FC<SelectPrefixScreenProps> = ({
   type Search = {
     search: string
   }
-  const { control, watch } = useForm<Search>()
+  const { control, watch, reset } = useForm<Search>()
 
   const [prefixx, setPrefix] = useState<CountryInterface>(CountryList.getAll()[0])
 
@@ -43,6 +43,7 @@ export const SelectPrefixScreen: FC<SelectPrefixScreenProps> = ({
         control={control}
         name="search"
         field={{
+          onClear: () => reset(),
           input: {
             placeholder: "Buscar",
           },

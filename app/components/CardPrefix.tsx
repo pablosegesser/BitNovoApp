@@ -1,10 +1,11 @@
-import { Text, TextStyle, TouchableHighlight, View, ViewStyle } from "react-native"
+import { TextStyle, TouchableHighlight, View, ViewStyle } from "react-native"
 import { FC } from "react"
 import { Column, Row } from "./flex"
 import { IconNew } from "./IconNew"
 import CheckIcon from "@/theme/SVG/Check"
 import { colors, typography } from "@/theme"
 import { CountryInterface } from "country-list-with-dial-code-and-flag/dist/types"
+import { Text } from "./Text"
 
 type Props = {
   item: CountryInterface
@@ -25,7 +26,7 @@ const CardPrefix: FC<Props> = ({ item, onPress, selected }) => {
 
           <Column style={$columnStyle}>
             <Text style={$title}>{item.dial_code}</Text>
-            <Text>{item.name}</Text>
+            <Text color={colors.newPallete.textGrey}>{item.name}</Text>
           </Column>
         </Row>
         <View style={{ marginTop: 8 }}>

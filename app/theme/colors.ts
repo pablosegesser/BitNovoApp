@@ -41,6 +41,8 @@ const newPallete = {
   black: "#002859",
   grey: "#E5E9F2",
   grey2: "#EFF2F7",
+  lightGrey: "#F9FAFC",
+  textGrey: "#647184",
   blue2: "#035AC5",
   white: "#ffffff",
   disabled: "#E6E3E0",

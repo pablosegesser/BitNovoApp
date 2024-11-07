@@ -1,4 +1,4 @@
-import { Text, TextStyle, TouchableHighlight, View, ViewStyle } from "react-native"
+import { TextStyle, TouchableHighlight, View, ViewStyle } from "react-native"
 import { FC } from "react"
 import { Currencies } from "@/screens"
 import { Column, Row } from "./flex"
@@ -6,6 +6,7 @@ import { IconNew } from "./IconNew"
 import { FiatCurrency } from "@/types/common"
 import CheckIcon from "@/theme/SVG/Check"
 import { colors, typography } from "@/theme"
+import { Text } from "./Text"
 
 type Props = {
   item: Currencies
@@ -26,7 +27,7 @@ const CardCurrency: FC<Props> = ({ item, onPress, selected }) => {
 
           <Column style={$columnStyle}>
             <Text style={$title}>{item.text}</Text>
-            <Text>{item.symbol}</Text>
+            <Text color={colors.newPallete.textGrey}>{item.symbol}</Text>
           </Column>
         </Row>
         <View style={{ marginTop: 8 }}>

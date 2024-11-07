@@ -32,6 +32,7 @@ import { KeyboardProvider } from "react-native-keyboard-controller"
 import { loadDateFnsLocale } from "./utils/formatDate"
 import { StatusBar } from "expo-status-bar"
 import { ModalProvider } from "./contexts/ModalContext"
+import { ToastProvider } from "react-native-toast-notifications"
 
 export const NAVIGATION_PERSISTENCE_KEY = "NAVIGATION_STATE"
 
@@ -109,16 +110,18 @@ function App(props: AppProps) {
   return (
     <SafeAreaProvider initialMetrics={initialWindowMetrics}>
       <ErrorBoundary catchErrors={Config.catchErrors}>
-        <ModalProvider>
-          <KeyboardProvider>
-            <StatusBar style={"dark"} backgroundColor="#fff" translucent />
-            <AppNavigator
-              linking={linking}
-              initialState={initialNavigationState}
-              onStateChange={onNavigationStateChange}
-            />
-          </KeyboardProvider>
-        </ModalProvider>
+        <ToastProvider>
+          <ModalProvider>
+            <KeyboardProvider>
+              <StatusBar style={"dark"} backgroundColor="#fff" translucent />
+              <AppNavigator
+                linking={linking}
+                initialState={initialNavigationState}
+                onStateChange={onNavigationStateChange}
+              />
+            </KeyboardProvider>
+          </ModalProvider>
+        </ToastProvider>
       </ErrorBoundary>
     </SafeAreaProvider>
   )

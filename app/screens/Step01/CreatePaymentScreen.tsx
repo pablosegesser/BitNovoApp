@@ -59,6 +59,7 @@ export const CreatePaymentScreen: React.FC<CreatePaymentScreenProps> = ({
     }
     setLoading(false)
   }
+  console.log(amount)
 
   return (
     <BottomMenuScreenLayout
@@ -74,7 +75,7 @@ export const CreatePaymentScreen: React.FC<CreatePaymentScreenProps> = ({
       <View style={$container}>
         <CurrencyInput
           style={$inputStyle}
-          placeholder="0.00$"
+          placeholder={`0.00${returnCurrencySymbol(currency)}`}
           textAlign="center"
           value={amount}
           onChangeValue={setAmount}

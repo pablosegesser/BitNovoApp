@@ -1,7 +1,9 @@
-import Svg, { SvgProps, G, Path, Defs, ClipPath, Rect } from "react-native-svg"
+import { SvgIconProps } from "@/types/common"
+import { FC } from "react"
+import Svg, { G, Path, Defs, ClipPath, Rect } from "react-native-svg"
 
-const DolarFlag = (props: SvgProps) => (
-  <Svg width={32} height={32} viewBox="0 0 32 32" fill="none" {...props}>
+const DolarFlag: FC<SvgIconProps> = ({ size = 32 }) => (
+  <Svg width={size} height={size} viewBox="0 0 32 32" fill="none">
     <G clipPath="url(#clip0_2476_5539)">
       <Path
         d="M16 32C24.8366 32 32 24.8366 32 16C32 7.16344 24.8366 0 16 0C7.16344 0 0 7.16344 0 16C0 24.8366 7.16344 32 16 32Z"

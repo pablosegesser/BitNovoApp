@@ -40,8 +40,10 @@ export const CharCounter: FC<CharCounterProps> = ({ entered, limit, ...props }) 
 
   return (
     <Row {...props}>
-      <Text style={isExceeded && styles.textError}>{text}</Text>
-      <Text> caracteres</Text>
+      <Text color={colors.newPallete.textGrey} style={isExceeded && styles.textError}>
+        {text}
+      </Text>
+      <Text color={colors.newPallete.textGrey}> caracteres</Text>
     </Row>
   )
 }
