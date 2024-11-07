@@ -34,6 +34,12 @@ export interface ApiFeedResponse {
   items: EpisodeItem[]
 }
 
+export interface CreateOrderPayload {
+  expected_output_amount: number
+  fiat: string
+  notes: string
+}
+
 /**
  * The options used to configure apisauce.
  */
@@ -47,4 +53,6 @@ export interface ApiConfig {
    * Milliseconds before we timeout the request.
    */
   timeout: number
+
+  apiKey: string
 }

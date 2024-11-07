@@ -1,11 +1,13 @@
+/* eslint-disable camelcase */
 import { AppStackScreenProps } from "@/navigators"
 import { BottomMenuScreenLayout } from "@/layouts/BottomMenuScreenLayout"
-import { TextStyle, View, ViewStyle } from "react-native"
+import { Alert, TextStyle, View, ViewStyle } from "react-native"
 import CurrencyInput from "react-native-currency-input"
 import { useState } from "react"
 import { TextField } from "@/components/fields/TextField"
 import { colors, spacing, typography } from "@/theme"
 import { FiatCurrency } from "@/types/common"
+import { api } from "@/services/api"
 
 interface CreatePaymentScreenProps extends AppStackScreenProps<"CreatePayment"> {}
 
@@ -34,6 +36,31 @@ export const CreatePaymentScreen: React.FC<CreatePaymentScreenProps> = ({
 
   const [focused, setFocused] = useState<boolean>(false)
 
+  const [loading, setLoading] = useState<boolean>(false)
+
+  const createOrder = async () => {
+    setLoading(true)
+    const response = await api.apisauce.post("/orders/", {
+      expected_output_amount: amount,
+      fiat: currency,
+      notes: message,
+    })
+    if (response.data && response.status === 200) {
+      console.log(response.data)
+      const { identifier, web_url } = response.data as { identifier: string; web_url: string }
+      navigation.navigate("SharePayment", {
+        amount: amount ?? 0,
+        currency,
+        identifier,
+        link: web_url,
+        message: message !== "" ? message : undefined,
+      })
+      setLoading(false)
+      Alert.alert("succesfully create order ")
+    }
+    setLoading(false)
+  }
+
   return (
     <BottomMenuScreenLayout
       avoidKeyboard
@@ -41,13 +68,8 @@ export const CreatePaymentScreen: React.FC<CreatePaymentScreenProps> = ({
       primaryButton={{
         title: "Continuar",
         disabled: !amount,
-        onPress: () =>
-          navigation.navigate("SharePayment", {
-            amount: amount ?? 0,
-            currency,
-            link: "http://google.com",
-            message: message !== "" ? message : undefined,
-          }),
+        onPress: createOrder,
+        busy: loading,
       }}
     >
       <View style={$container}>

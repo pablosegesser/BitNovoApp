@@ -36,6 +36,7 @@ export type AppStackParamList = {
   SharePayment: {
     link: string
     amount: number
+    identifier: string
     message?: string | undefined
     currency: FiatCurrency
     prefix?: string | undefined
@@ -43,6 +44,7 @@ export type AppStackParamList = {
   SelectPrefix: {
     link: string
     amount: number
+    identifier: string
     message?: string | undefined
     currency: FiatCurrency
     prefix?: string | undefined
@@ -50,6 +52,7 @@ export type AppStackParamList = {
   QRlink: {
     link: string
     amount: number
+    identifier: string
     message?: string | undefined
     currency: FiatCurrency
     prefix?: string | undefined

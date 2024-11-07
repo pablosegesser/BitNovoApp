@@ -6,5 +6,6 @@
  * https://reactnative.dev/docs/security#storing-sensitive-info
  */
 export default {
-  API_URL: "https://api.rss2json.com/v1/",
+  API_URL: "https://payments.pre-bnvo.com/api/v1",
+  API_KEY: "3c45f17a-1d3f-4ac2-b8ac-a65b4060e5ab",
 }

@@ -14,6 +14,7 @@ import type { ApiConfig } from "./api.types"
  */
 export const DEFAULT_API_CONFIG: ApiConfig = {
   url: Config.API_URL,
+  apiKey: Config.API_KEY,
   timeout: 10000,
 }
 
@@ -34,7 +35,8 @@ export class Api {
       baseURL: this.config.url,
       timeout: this.config.timeout,
       headers: {
-        Accept: "application/json",
+        "Accept": "application/json",
+        "X-Device-Id": this.config.apiKey,
       },
     })
   }
