@@ -1,7 +1,9 @@
-import Svg, { SvgProps, Path } from "react-native-svg"
+import { SvgIconProps } from "@/types/common"
+import { FC } from "react"
+import Svg, { Path } from "react-native-svg"
 
-const InfoCircleIcon = (props: SvgProps) => (
-  <Svg width={20} height={20} viewBox="0 0 20 20" fill="none" {...props}>
+const InfoCircleIcon: FC<SvgIconProps> = ({ size = 20 }) => (
+  <Svg width={size} height={size} viewBox="0 0 20 20" fill="none">
     <Path
       opacity={0.4}
       d="M10 18.3333C14.6024 18.3333 18.3333 14.6023 18.3333 9.99996C18.3333 5.39759 14.6024 1.66663 10 1.66663C5.39763 1.66663 1.66667 5.39759 1.66667 9.99996C1.66667 14.6023 5.39763 18.3333 10 18.3333Z"

@@ -9,7 +9,7 @@ import { createNativeStackNavigator, NativeStackScreenProps } from "@react-navig
 import * as Screens from "@/screens"
 import Config from "../config"
 import { navigate, navigationRef, useBackButtonHandler } from "./navigationUtilities"
-import { useAppTheme, useThemeProvider } from "@/utils/useAppTheme"
+import { useThemeProvider } from "@/utils/useAppTheme"
 import { ComponentProps } from "react"
 import { FiatCurrency } from "@/types/common"
 import SelectCurrency from "@/components/SelectCurrency"
@@ -30,7 +30,6 @@ import BackButtonIcon from "@/theme/SVG/BackButton"
  *   https://reactnavigation.org/docs/typescript/#organizing-types
  */
 export type AppStackParamList = {
-  Welcome: undefined
   CreatePayment: { currency: FiatCurrency }
   SelectCurrency: { currency: FiatCurrency }
   SharePayment: {
@@ -57,6 +56,8 @@ export type AppStackParamList = {
     currency: FiatCurrency
     prefix?: string | undefined
   }
+  Success: undefined
+  Error: undefined
   // 🔥 Your screens go here
   // IGNITE_GENERATOR_ANCHOR_APP_STACK_PARAM_LIST
 }
@@ -76,10 +77,6 @@ export type AppStackScreenProps<T extends keyof AppStackParamList> = NativeStack
 const Stack = createNativeStackNavigator<AppStackParamList>()
 
 const AppStack = () => {
-  const {
-    theme: { colors },
-  } = useAppTheme()
-
   return (
     <Stack.Navigator
       initialRouteName="CreatePayment"
@@ -157,6 +154,7 @@ const AppStack = () => {
         options={({ navigation }) => ({
           headerShown: true,
           headerTitle: "",
+          navigationBarColor: "#035AC5",
           headerLeft: () => (
             <TouchableOpacity onPress={() => navigation.goBack()}>
               <BackButtonIcon />
@@ -164,8 +162,9 @@ const AppStack = () => {
           ),
         })}
       />
+      <Stack.Screen name="Success" component={Screens.SuccessScreen} />
+      <Stack.Screen name="Error" component={Screens.ErrorScreen} />
 
-      <Stack.Screen name="Welcome" component={Screens.WelcomeScreen} />
       {/** 🔥 Your screens go here */}
       {/* IGNITE_GENERATOR_ANCHOR_APP_STACK_SCREENS */}
     </Stack.Navigator>

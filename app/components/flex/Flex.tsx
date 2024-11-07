@@ -1,5 +1,5 @@
 import { spacing, Spacing } from "app/theme"
-import React, { FC } from "react"
+import { FC } from "react"
 import { StyleSheet, View, ViewProps } from "react-native"
 
 export interface FlexProps extends ViewProps {

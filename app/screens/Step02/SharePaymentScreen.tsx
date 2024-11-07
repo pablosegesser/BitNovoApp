@@ -4,9 +4,8 @@ import { BottomMenuScreenLayout } from "@/layouts/BottomMenuScreenLayout"
 import { AppStackScreenProps } from "@/navigators"
 import { colors, spacing, typography } from "@/theme"
 import PaymentIcon from "@/theme/SVG/PaymentIcon"
-import { FC, useState } from "react"
+import { FC, useCallback, useEffect, useState } from "react"
 import {
-  Alert,
   Linking,
   Platform,
   Pressable,
@@ -27,6 +26,8 @@ import { IconNew } from "@/components/IconNew"
 import * as Sharing from "expo-sharing"
 import { formatMoney } from "@/utils/formatMoney"
 import NewWallet from "@/theme/SVG/NewWallet"
+import { useModal } from "@/hooks/useModal"
+import ModalSent from "@/components/ModalSent"
 
 interface SharePaymentScreenProps extends AppStackScreenProps<"SharePayment"> {}
 
@@ -40,10 +41,10 @@ export const SharePaymentScreen: FC<SharePaymentScreenProps> = ({
     const url = `whatsapp://send?text=Payment link from BitNovo ${link}&phone=${number}`
     Linking.openURL(url)
       .then(() => {
-        Alert.alert("shared via whatsapp complete")
+        handlePress("Tu solicitud de pago ha sido enviado con éxito por WhatsApp .")
       })
       .catch(() => {
-        Alert.alert("shared via whatsapp error")
+        handlePress("Tu solicitud de pago no pudo ser enviada con éxito por WhatsApp .", true)
       })
   }
   const ShareOptions = {
@@ -51,13 +52,22 @@ export const SharePaymentScreen: FC<SharePaymentScreenProps> = ({
     dialogTitle: "Payment Link BitNovo",
   }
 
+  const sentModal = useModal(ModalSent)
+
+  const handlePress = useCallback((message: string, error?: boolean) => {
+    sentModal({
+      message,
+      error,
+    })
+  }, [])
+
   const handleSendViaEmail = (link: string) => {
     Linking.openURL(`mailto:support@example.com?subject=PaymentLink&body=${link}`)
       .then(() => {
-        Alert.alert("shared via email complete")
+        handlePress("Tu solicitud de pago ha sido enviado con éxito por Email .")
       })
       .catch(() => {
-        Alert.alert("shared via email error")
+        handlePress("Tu solicitud de pago no pudo ser enviado con éxito por Email .", true)
       })
   }
   const [number, setNumber] = useState<string>("")
@@ -65,10 +75,36 @@ export const SharePaymentScreen: FC<SharePaymentScreenProps> = ({
   const ShareAndroid = (link: string) =>
     Share.share({
       message: link,
+    }).then(() => {
+      handlePress("Tu solicitud de pago  ha sido compartida con éxito.")
     })
+
+  const socket = new WebSocket(`wss://payments.pre-bnvo.com/ws/merchant/${params.identifier}`)
+  console.log(params.link)
+  useEffect(() => {
+    socket.onmessage = (a) => {
+      console.log(a.data)
+
+      const resp = JSON.parse(a.data)
+
+      if (resp.status === "CO") {
+        navigation.reset({
+          index: 0,
+          routes: [{ name: "Success" }],
+        })
+      }
+
+      if (resp.status === "CA" || resp.status === "ER") {
+        navigation.reset({
+          index: 0,
+          routes: [{ name: "Error" }],
+        })
+      }
+    }
+  }, [])
   return (
     <BottomMenuScreenLayout
-      style={{ backgroundColor: "#fff" }}
+      style={$layoutStyle}
       buttons={[
         {
           title: "Nueva solicitud",
@@ -99,22 +135,22 @@ export const SharePaymentScreen: FC<SharePaymentScreenProps> = ({
         </Column>
 
         <Column gap={"md"}>
-          <Row gap={"xs"} style={{ justifyContent: "space-between" }}>
-            <Row gap={"md"} style={{ ...$field, width: "80%" }}>
+          <Row gap={"xs"} style={$containerPreview}>
+            <Row gap={"md"} style={$subcontainerPreview}>
               <LinkIcon />
-              <Text size="xs">{params.link}</Text>
+              <Text size="xxs">{params.link}</Text>
             </Row>
             <TouchableOpacity style={$qricon} onPress={() => navigation.navigate("QRlink", params)}>
               <QRicon />
             </TouchableOpacity>
           </Row>
 
-          <Pressable onPress={() => handleSendViaEmail(params.link)}>
+          <TouchableOpacity onPress={() => handleSendViaEmail(params.link)}>
             <Row gap={"md"} style={$field}>
               <SmsIcon />
-              <Text size="xs">Enviar por correo electrónico</Text>
+              <Text size="xxs">Enviar por correo electrónico</Text>
             </Row>
-          </Pressable>
+          </TouchableOpacity>
 
           {params.prefix ? (
             <TextField
@@ -152,17 +188,17 @@ export const SharePaymentScreen: FC<SharePaymentScreenProps> = ({
               }}
             />
           ) : (
-            <Pressable onPress={() => navigation.navigate("SelectPrefix", params)}>
+            <TouchableOpacity onPress={() => navigation.navigate("SelectPrefix", params)}>
               <Row gap={"xl"} style={activeButton ? $fieldActive : $field}>
                 <Row gap={"md"}>
                   <WhatsAppIcon />
-                  <Text size="xs">Enviar a número de WhatsApp</Text>
+                  <Text size="xxs">Enviar a número de WhatsApp</Text>
                 </Row>
               </Row>
-            </Pressable>
+            </TouchableOpacity>
           )}
 
-          <Pressable
+          <TouchableOpacity
             onPress={
               Platform.OS === "android"
                 ? () => ShareAndroid(params.link)
@@ -171,14 +207,17 @@ export const SharePaymentScreen: FC<SharePaymentScreenProps> = ({
           >
             <Row gap={"md"} style={$field}>
               <ExportIcon />
-              <Text size="xs">Compartir con otras aplicaciones</Text>
+              <Text size="xxs">Compartir con otras aplicaciones</Text>
             </Row>
-          </Pressable>
+          </TouchableOpacity>
         </Column>
       </View>
     </BottomMenuScreenLayout>
   )
 }
+const $containerPreview: ViewStyle = { justifyContent: "space-between" }
+
+const $layoutStyle: ViewStyle = { backgroundColor: "#fff" }
 const $square: ViewStyle = {
   backgroundColor: "#F9FAFC",
   borderRadius: 8,
@@ -206,6 +245,7 @@ const $field: ViewStyle = {
   borderColor: colors.newPallete.grey,
   padding: 15,
 }
+const $subcontainerPreview: ViewStyle = { ...$field, width: "80%" }
 
 const $fieldActive: ViewStyle = {
   ...$field,

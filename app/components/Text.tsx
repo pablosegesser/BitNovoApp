@@ -1,7 +1,7 @@
 import React from "react"
 import { StyleProp, Text as RNText, TextProps as RNTextProps, TextStyle } from "react-native"
 import { isRTL, translate, TxKeyPath } from "../i18n"
-import { colors, typography } from "../theme"
+import { typography } from "../theme"
 import { TOptions } from "i18next"
 import { useAppTheme } from "@/utils/useAppTheme"
 
@@ -108,7 +108,7 @@ const $fontWeightStyles = Object.entries(typography.primary).reduce((acc, [weigh
 const $baseStyle: StyleProp<TextStyle> = [
   $sizeStyles.xs,
   $fontWeightStyles.normal,
-  { color: colors.text },
+  { color: "#647184" },
 ]
 
 const $presets = {
