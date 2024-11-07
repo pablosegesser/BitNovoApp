@@ -126,7 +126,7 @@ export const SharePaymentScreen: FC<SharePaymentScreenProps> = ({
               </Text>
             </Column>
           </Row>
-          <Text size="xs" color={colors.newPallete.textGrey}>
+          <Text size="xxs" color={colors.newPallete.textGrey}>
             Comparte el enlace de pago con el cliente
           </Text>
         </Column>
@@ -139,7 +139,9 @@ export const SharePaymentScreen: FC<SharePaymentScreenProps> = ({
             >
               <Row gap={"md"}>
                 <LinkIcon />
-                <Text size="xxs">{params.link}</Text>
+                <Text style={$text} numberOfLines={1} ellipsizeMode="tail">
+                  {params.link}
+                </Text>
               </Row>
             </TouchableOpacity>
 
@@ -151,7 +153,7 @@ export const SharePaymentScreen: FC<SharePaymentScreenProps> = ({
           <TouchableOpacity onPress={() => handleSendViaEmail(params.link)}>
             <Row gap={"md"} style={$field}>
               <SmsIcon />
-              <Text size="xxs">Enviar por correo electrónico</Text>
+              <Text style={$text}>Enviar por correo electrónico</Text>
             </Row>
           </TouchableOpacity>
 
@@ -164,10 +166,13 @@ export const SharePaymentScreen: FC<SharePaymentScreenProps> = ({
                 onBlur: () => setActiveButton(false),
                 onEndEditing: () => setActiveButton(false),
                 left: (
-                  <Pressable onPress={() => navigation.navigate("SelectPrefix", params)}>
+                  <Pressable
+                    hitSlop={50}
+                    onPress={() => navigation.navigate("SelectPrefix", params)}
+                  >
                     <Row gap={"xxs"}>
                       <WhatsAppIcon />
-                      <Text size="xxs">{params.prefix}</Text>
+                      <Text style={$text}>{params.prefix}</Text>
                       <IconNew size={18} name="chevron-down" />
                     </Row>
                   </Pressable>
@@ -180,7 +185,7 @@ export const SharePaymentScreen: FC<SharePaymentScreenProps> = ({
                         disabled={number.length < 10}
                         onPress={() => handleSendViaWhatsApp(params.link, params.prefix + number)}
                       >
-                        <Text color="#fff" size="xxs" weight="bold">
+                        <Text color="#fff" style={$text} weight="bold">
                           Enviar
                         </Text>
                       </TouchableOpacity>
@@ -195,7 +200,7 @@ export const SharePaymentScreen: FC<SharePaymentScreenProps> = ({
               <Row gap={"xl"} style={activeButton ? $fieldActive : $field}>
                 <Row gap={"md"}>
                   <WhatsAppIcon />
-                  <Text size="xxs">Enviar a número de WhatsApp</Text>
+                  <Text style={$text}>Enviar a número de WhatsApp</Text>
                 </Row>
               </Row>
             </TouchableOpacity>
@@ -210,7 +215,7 @@ export const SharePaymentScreen: FC<SharePaymentScreenProps> = ({
           >
             <Row gap={"md"} style={$field}>
               <ExportIcon />
-              <Text size="xxs">Compartir con otras aplicaciones</Text>
+              <Text style={$text}>Compartir con otras aplicaciones</Text>
             </Row>
           </TouchableOpacity>
         </Column>
@@ -221,6 +226,8 @@ export const SharePaymentScreen: FC<SharePaymentScreenProps> = ({
 const $containerPreview: ViewStyle = {
   justifyContent: "space-between",
 }
+
+const $text: TextStyle = { fontSize: 13 }
 
 const $layoutStyle: ViewStyle = { backgroundColor: "#fff" }
 const $square: ViewStyle = {

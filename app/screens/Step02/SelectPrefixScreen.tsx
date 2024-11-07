@@ -20,7 +20,9 @@ export const SelectPrefixScreen: FC<SelectPrefixScreenProps> = ({
   }
   const { control, watch, reset } = useForm<Search>()
 
-  const [prefixx, setPrefix] = useState<CountryInterface>(CountryList.getAll()[0])
+  const prefixDefault = CountryList.getAll().findIndex((c) => c.dial_code === params.prefix) || 0
+
+  const [prefixx, setPrefix] = useState<CountryInterface>(CountryList.getAll()[prefixDefault])
 
   const setPrefixx = (a: CountryInterface) => {
     setPrefix(a)
@@ -51,7 +53,7 @@ export const SelectPrefixScreen: FC<SelectPrefixScreenProps> = ({
       />
       <FlatList
         data={prefixSearched}
-        keyExtractor={(item) => item.dialCode}
+        keyExtractor={(item, i) => `${item.dialCode}_${i}`}
         renderItem={({ item }) => (
           <CardPrefix selected={prefixx} onPress={setPrefixx} item={item} />
         )}

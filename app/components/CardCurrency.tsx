@@ -58,6 +58,6 @@ const $columnStyle: ViewStyle = {
 }
 
 const $title: TextStyle = {
-  fontSize: 14,
+  fontSize: 16,
   fontFamily: typography.primary.bold,
 }
