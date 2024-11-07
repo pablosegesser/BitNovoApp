@@ -233,11 +233,12 @@ const $layoutStyle: ViewStyle = { backgroundColor: "#fff" }
 const $square: ViewStyle = {
   backgroundColor: "#F9FAFC",
   borderRadius: 8,
-  padding: 10,
+  paddingHorizontal: 10,
+  paddingVertical: 20,
   alignItems: "center",
   width: "100%",
   alignSelf: "center",
-  marginBottom: 50,
+  marginBottom: 20,
 }
 
 const $buttonWp: ViewStyle = {
