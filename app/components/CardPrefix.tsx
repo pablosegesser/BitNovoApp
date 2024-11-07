@@ -30,7 +30,7 @@ const CardPrefix: FC<Props> = ({ item, onPress, selected }) => {
           </Column>
         </Row>
         <View style={{ marginTop: 8 }}>
-          {selected.dial_code === item.dial_code ? (
+          {selected?.dial_code && selected.dial_code === item.dial_code ? (
             <CheckIcon />
           ) : (
             <IconNew size={20} name="chevron-forward" />
