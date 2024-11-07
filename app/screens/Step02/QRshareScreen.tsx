@@ -21,7 +21,6 @@ export const QRshareScreen: FC<QRshareScreenProps> = ({ navigation, route: { par
   console.log(params.link)
   useEffect(() => {
     socket.onmessage = (a) => {
-      console.log(a.data)
       const resp = JSON.parse(a.data)
 
       if (resp.status === "CO") {
