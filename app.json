@@ -20,7 +20,7 @@
     "jsEngine": "hermes",
     "assetBundlePatterns": ["**/*"],
     "androidNavigationBar": {
-      "backgroundColor": "#002859"
+      "backgroundColor": "#FFFFFF"
     },
     "android": {
       "icon": "./assets/images/app-icon-android-legacy.png",

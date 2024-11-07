@@ -59,7 +59,6 @@ export const CreatePaymentScreen: React.FC<CreatePaymentScreenProps> = ({
     }
     setLoading(false)
   }
-  console.log(amount)
 
   return (
     <BottomMenuScreenLayout
