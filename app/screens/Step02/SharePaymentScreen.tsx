@@ -118,7 +118,7 @@ export const SharePaymentScreen: FC<SharePaymentScreenProps> = ({
         <Column gap={"md"} style={$square}>
           <Row gap={"md"}>
             <PaymentIcon />
-            <Column gap="xxs">
+            <Column gap="xxs" center>
               <Text color={colors.newPallete.textGrey}>Solicitud de pago</Text>
               <Text style={$number}>
                 {formatNumber(params.amount, 2)}
@@ -133,8 +133,11 @@ export const SharePaymentScreen: FC<SharePaymentScreenProps> = ({
 
         <Column gap={"md"}>
           <Row style={$containerPreview}>
-            <TouchableOpacity onPress={() => copyToClipboard(params.link)}>
-              <Row gap={"md"} style={$subcontainerPreview}>
+            <TouchableOpacity
+              onPress={() => copyToClipboard(params.link)}
+              style={$subcontainerPreview}
+            >
+              <Row gap={"md"}>
                 <LinkIcon />
                 <Text size="xxs">{params.link}</Text>
               </Row>
@@ -247,7 +250,7 @@ const $field: ViewStyle = {
   borderColor: colors.newPallete.grey,
   padding: 15,
 }
-const $subcontainerPreview: ViewStyle = { ...$field, width: "100%" }
+const $subcontainerPreview: ViewStyle = { ...$field, width: "82%" }
 
 const $fieldActive: ViewStyle = {
   ...$field,

@@ -166,7 +166,7 @@ const styles = StyleSheet.create<Styles>({
     color: colors.text,
   },
   textContainer: {
-    backgroundColor: colors.newPallete.loghtBlue,
+    backgroundColor: colors.newPallete.lightGrey,
   },
   textDisabledContainer: {
     backgroundColor: colors.newPallete.loghtBlue,
