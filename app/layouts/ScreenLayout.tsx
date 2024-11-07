@@ -36,7 +36,7 @@ export const ScreenLayout: FC<ScreenLayoutProps> = ({
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         enabled={avoidKeyboard}
-        keyboardVerticalOffset={headerHeight}
+        keyboardVerticalOffset={headerHeight * 1.5}
         style={styles.container}
       >
         {children}

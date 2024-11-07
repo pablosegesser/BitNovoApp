@@ -18,7 +18,7 @@ const ModalSent: FC<SentModalProps> = ({ message, error = false, dismiss }) => {
   const width = Dimensions.get("window").width
 
   return (
-    <SafeAreaBottomSheet style={$container}>
+    <SafeAreaBottomSheet style={$container} hideHandle>
       <Column gap={"lg"} center>
         {error ? <InfoCircleIcon size={80} /> : <CheckCircle />}
         <Text size="xl" weight="bold">
@@ -33,4 +33,10 @@ const ModalSent: FC<SentModalProps> = ({ message, error = false, dismiss }) => {
 
 export default ModalSent
 
-const $container: ViewStyle = { backgroundColor: "#fff", paddingBottom: 50 }
+const $container: ViewStyle = {
+  backgroundColor: "#fff",
+  borderTopRightRadius: 24,
+  borderTopLeftRadius: 24,
+  paddingBottom: 50,
+  paddingTop: 120,
+}

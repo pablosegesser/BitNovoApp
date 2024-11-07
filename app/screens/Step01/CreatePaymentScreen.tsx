@@ -46,7 +46,6 @@ export const CreatePaymentScreen: React.FC<CreatePaymentScreenProps> = ({
       notes: message,
     })
     if (response.data && response.status === 200) {
-      console.log(response.data)
       const { identifier, web_url } = response.data as { identifier: string; web_url: string }
       navigation.navigate("SharePayment", {
         amount: amount ?? 0,
@@ -82,6 +81,7 @@ export const CreatePaymentScreen: React.FC<CreatePaymentScreenProps> = ({
           minValue={0}
           delimiter="."
           separator=","
+          placeholderTextColor={"#C0CCDA"}
         />
 
         <TextField
