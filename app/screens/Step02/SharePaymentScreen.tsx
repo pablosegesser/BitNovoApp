@@ -5,7 +5,17 @@ import { AppStackScreenProps } from "@/navigators"
 import { colors, spacing, typography } from "@/theme"
 import PaymentIcon from "@/theme/SVG/PaymentIcon"
 import { FC, useState } from "react"
-import { Linking, Pressable, TextStyle, TouchableOpacity, View, ViewStyle } from "react-native"
+import {
+  Alert,
+  Linking,
+  Platform,
+  Pressable,
+  Share,
+  TextStyle,
+  TouchableOpacity,
+  View,
+  ViewStyle,
+} from "react-native"
 import { returnCurrencySymbol } from "../Step01/CreatePaymentScreen"
 import LinkIcon from "@/theme/SVG/LinkIcon"
 import QRicon from "@/theme/SVG/QrIcon"
@@ -15,6 +25,8 @@ import ExportIcon from "@/theme/SVG/ExportIcon"
 import { TextField } from "@/components/fields/TextField"
 import { IconNew } from "@/components/IconNew"
 import * as Sharing from "expo-sharing"
+import { formatMoney } from "@/utils/formatMoney"
+import NewWallet from "@/theme/SVG/NewWallet"
 
 interface SharePaymentScreenProps extends AppStackScreenProps<"SharePayment"> {}
 
@@ -27,19 +39,50 @@ export const SharePaymentScreen: FC<SharePaymentScreenProps> = ({
   const handleSendViaWhatsApp = (link: string, number: string) => {
     const url = `whatsapp://send?text=Payment link from BitNovo ${link}&phone=${number}`
     Linking.openURL(url)
-      .then(() => {})
-      .catch(() => {})
+      .then(() => {
+        Alert.alert("shared via whatsapp complete")
+      })
+      .catch(() => {
+        Alert.alert("shared via whatsapp error")
+      })
+  }
+  const ShareOptions = {
+    mimeType: "text/css",
+    dialogTitle: "Payment Link BitNovo",
   }
 
   const handleSendViaEmail = (link: string) => {
     Linking.openURL(`mailto:support@example.com?subject=PaymentLink&body=${link}`)
-      .then(() => {})
-      .catch(() => {})
+      .then(() => {
+        Alert.alert("shared via email complete")
+      })
+      .catch(() => {
+        Alert.alert("shared via email error")
+      })
   }
   const [number, setNumber] = useState<string>("")
 
+  const ShareAndroid = (link: string) =>
+    Share.share({
+      message: link,
+    })
   return (
-    <BottomMenuScreenLayout style={{ backgroundColor: "#fff" }}>
+    <BottomMenuScreenLayout
+      style={{ backgroundColor: "#fff" }}
+      buttons={[
+        {
+          title: "Nueva solicitud",
+          variant: "text",
+          renderIcon: <NewWallet />,
+          iconOnRight: true,
+          onPress: () =>
+            navigation.reset({
+              index: 0,
+              routes: [{ name: "CreatePayment", params: { currency: "USD" } }],
+            }),
+        },
+      ]}
+    >
       <View style={{ paddingHorizontal: spacing.lg }}>
         <Column gap={"md"} style={$square}>
           <Row>
@@ -47,7 +90,7 @@ export const SharePaymentScreen: FC<SharePaymentScreenProps> = ({
             <Column gap="xxs">
               <Text>Solicitud de pago</Text>
               <Text style={$number}>
-                {params.amount}
+                {formatMoney(params.amount)}
                 {returnCurrencySymbol(params.currency)}
               </Text>
             </Column>
@@ -61,7 +104,7 @@ export const SharePaymentScreen: FC<SharePaymentScreenProps> = ({
               <LinkIcon />
               <Text size="xs">{params.link}</Text>
             </Row>
-            <TouchableOpacity style={$qricon}>
+            <TouchableOpacity style={$qricon} onPress={() => navigation.navigate("QRlink", params)}>
               <QRicon />
             </TouchableOpacity>
           </Row>
@@ -92,7 +135,7 @@ export const SharePaymentScreen: FC<SharePaymentScreenProps> = ({
                 ),
                 right: (
                   <>
-                    {activeButton && (
+                    {(activeButton || number.length === 10) && (
                       <TouchableOpacity
                         style={number.length < 10 ? $buttonWpDisabled : $buttonWp}
                         disabled={number.length < 10}
@@ -119,7 +162,13 @@ export const SharePaymentScreen: FC<SharePaymentScreenProps> = ({
             </Pressable>
           )}
 
-          <Pressable onPress={() => Sharing.shareAsync(params.link)}>
+          <Pressable
+            onPress={
+              Platform.OS === "android"
+                ? () => ShareAndroid(params.link)
+                : () => Sharing.shareAsync(params.link, ShareOptions)
+            }
+          >
             <Row gap={"md"} style={$field}>
               <ExportIcon />
               <Text size="xs">Compartir con otras aplicaciones</Text>

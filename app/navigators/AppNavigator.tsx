@@ -36,12 +36,21 @@ export type AppStackParamList = {
   SharePayment: {
     link: string
     amount: number
+    message?: string | undefined
     currency: FiatCurrency
     prefix?: string | undefined
   }
   SelectPrefix: {
     link: string
     amount: number
+    message?: string | undefined
+    currency: FiatCurrency
+    prefix?: string | undefined
+  }
+  QRlink: {
+    link: string
+    amount: number
+    message?: string | undefined
     currency: FiatCurrency
     prefix?: string | undefined
   }
@@ -73,9 +82,9 @@ const AppStack = () => {
       initialRouteName="CreatePayment"
       screenOptions={{
         headerShown: false,
-        navigationBarColor: colors.background,
+        navigationBarColor: "#fff",
         contentStyle: {
-          backgroundColor: colors.background,
+          backgroundColor: "#fff",
         },
       }}
     >
@@ -85,7 +94,8 @@ const AppStack = () => {
         component={Screens.CreatePaymentScreen}
         options={({ route: { params } }) => ({
           headerShown: true,
-          title: "Crear Pago",
+          title: "Importe a pagar",
+          headerTitleAlign: "center",
           headerRight: () => (
             <TouchableOpacity
               onPress={() => navigate("SelectCurrency", { currency: params.currency })}
@@ -102,6 +112,7 @@ const AppStack = () => {
         options={({ route: { params } }) => ({
           headerShown: true,
           title: "Selecciona una divisa",
+          headerTitleAlign: "center",
           headerShadowVisible: false,
           headerLeft: () => (
             <TouchableOpacity
@@ -115,9 +126,16 @@ const AppStack = () => {
       <Stack.Screen
         name="SharePayment"
         component={Screens.SharePaymentScreen}
-        options={{
+        options={({ navigation }) => ({
           headerShown: true,
-        }}
+          headerTitle: "",
+          headerShadowVisible: false,
+          headerLeft: () => (
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+              <BackButtonIcon />
+            </TouchableOpacity>
+          ),
+        })}
       />
 
       <Stack.Screen
@@ -125,7 +143,23 @@ const AppStack = () => {
         component={Screens.SelectPrefixScreen}
         options={{
           headerShown: true,
+          headerTitle: "Seleccionar país",
+          headerTitleAlign: "center",
+          headerShadowVisible: false,
         }}
+      />
+      <Stack.Screen
+        name="QRlink"
+        component={Screens.QRshareScreen}
+        options={({ navigation }) => ({
+          headerShown: true,
+          headerTitle: "",
+          headerLeft: () => (
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+              <BackButtonIcon />
+            </TouchableOpacity>
+          ),
+        })}
       />
 
       <Stack.Screen name="Welcome" component={Screens.WelcomeScreen} />

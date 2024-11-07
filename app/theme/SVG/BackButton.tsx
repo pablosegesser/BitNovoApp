@@ -1,7 +1,7 @@
 import Svg, { SvgProps, Rect, Path } from "react-native-svg"
 
 const BackButtonIcon = (props: SvgProps) => (
-  <Svg width={28} height={28} viewBox="0 0 28 28" fill="none" {...props}>
+  <Svg width={40} height={40} viewBox="0 0 28 28" fill="none" {...props}>
     <Rect width={28} height={28} rx={14} fill="#EFF2F7" />
     <Path
       opacity={0.4}

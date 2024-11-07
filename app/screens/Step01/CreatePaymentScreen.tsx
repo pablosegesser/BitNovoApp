@@ -46,6 +46,7 @@ export const CreatePaymentScreen: React.FC<CreatePaymentScreenProps> = ({
             amount: amount ?? 0,
             currency,
             link: "http://google.com",
+            message: message !== "" ? message : undefined,
           }),
       }}
     >

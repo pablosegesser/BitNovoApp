@@ -1,4 +1,4 @@
-import React, { type FC, useMemo } from "react"
+import React, { type FC, ReactNode, useMemo } from "react"
 import {
   ActivityIndicator,
   type StyleProp,
@@ -30,6 +30,7 @@ export interface ButtonProps extends TouchableOpacityProps, ButtonState {
   title?: string | undefined
   titleStyle?: StyleProp<TextStyle> | undefined
   icon?: IconProps | undefined
+  renderIcon?: ReactNode | undefined
   minHeight?: number
   iconOnRight?: boolean | undefined
   contentContainerStyle?: StyleProp<ViewStyle> | undefined
@@ -48,6 +49,7 @@ export const Button: FC<ButtonProps> = ({
   contentContainerStyle,
   style,
   disabled,
+  renderIcon,
   children,
   tx,
   minHeight = 22,
@@ -59,9 +61,12 @@ export const Button: FC<ButtonProps> = ({
     if (icon) {
       return <Icon {...icon} />
     }
+    if (renderIcon) {
+      return renderIcon
+    }
 
     return null
-  }, [icon, variant, styles])
+  }, [icon, renderIcon, variant, styles])
 
   const i18nText = tx && translate(tx)
   const content = i18nText || title || children
@@ -161,8 +166,7 @@ const styles = StyleSheet.create<Styles>({
     color: colors.text,
   },
   textContainer: {
-    backgroundColor: colors.background,
-    borderColor: colors.background,
+    backgroundColor: colors.newPallete.loghtBlue,
   },
   textDisabledContainer: {
     backgroundColor: colors.newPallete.loghtBlue,
@@ -171,7 +175,7 @@ const styles = StyleSheet.create<Styles>({
     color: colors.newPallete.blue,
   },
   textTitle: {
-    color: colors.newPallete.black,
+    color: colors.newPallete.blue2,
   },
   title: {
     color: colors.newPallete.white,

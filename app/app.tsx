@@ -107,7 +107,7 @@ function App(props: AppProps) {
   return (
     <SafeAreaProvider initialMetrics={initialWindowMetrics}>
       <ErrorBoundary catchErrors={Config.catchErrors}>
-        <KeyboardProvider>
+        <KeyboardProvider statusBarTranslucent>
           <AppNavigator
             linking={linking}
             initialState={initialNavigationState}
